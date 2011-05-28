@@ -1,44 +1,15 @@
 package br.eng.mosaic.pigeon.common.dto;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import br.eng.mosaic.pigeon.common.domain.SocialNetwork.Social;
-
 public class UserInfo {
 	
+	public String id;
 	public String name;
-	public String email;
-	public List<SocialInfo> socials;
+	public String token;
 	
-	public UserInfo(String name, String email) {
+	public UserInfo(String name, String id, String token) {
+		this.id = id;
 		this.name = name;
-		this.email = email;
-		this.socials = new ArrayList<SocialInfo>(); 
-	}
-	
-	public static class SocialInfo {
-		public String id;
-		public String token;
-		public Social social;
-		
-		public SocialInfo(Social social, String id, String token) {
-			this.social = social;
-			this.id = id;
-			this.token = token;
-		}
-	}
-	
-	public void add( Social social, String id, String token ) {
-		socials.add( new SocialInfo(social, id, token) );
-	}
-	
-	public SocialInfo get(Social social) {
-		for (SocialInfo info : this.socials) {
-			if ( info.social.equals( social ) )
-				return info;
-		}
-		return null;
+		this.token = token;
 	}
 	
 }

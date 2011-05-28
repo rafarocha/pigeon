@@ -27,9 +27,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-import br.eng.mosaic.pigeon.common.domain.SocialNetwork.Social;
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
-import br.eng.mosaic.pigeon.common.dto.UserInfo.SocialInfo;
 import br.eng.mosaic.pigeon.server.exception.ServerCrashException;
 import br.eng.mosaic.pigeon.server.exception.ServerUnknownResourceException;
 import br.eng.mosaic.pigeon.server.helper.MimeType;
@@ -128,11 +126,8 @@ public class FacebookClientTest extends TestCase {
 		assertNotNull( user );
 		
 		assertEquals( user.name , json.getString("name") );
-		assertEquals( user.email , json.getString("email") );
-		
-		SocialInfo social = user.get( Social.facebook );
-		assertEquals( social.id , json.getString("id") );
-		assertEquals( social.token , token );
+		assertEquals( user.id , json.getString("id") );
+		assertEquals( user.token , token );
 		
 		stopServer();
 	}

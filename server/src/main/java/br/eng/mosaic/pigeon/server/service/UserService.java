@@ -10,15 +10,15 @@ public class UserService {
 	
 	public User connect(UserInfo userInfo) {
 		
-		User user = userRepository.getAccount( userInfo.email );
+		User user = userRepository.getAccount( userInfo.id );
 		if ( user == null ) {
 			/*
 			 * TODO register and confirm registration
 			 * TODO refactor code below, argh!
 			 */
 			user = new User();
+			user.email = userInfo.id;
 			user.name = userInfo.name;
-			user.email = userInfo.email;
 			userRepository.insert(user);
 		}
 		

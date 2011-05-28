@@ -1,6 +1,5 @@
 package br.eng.mosaic.pigeon.server.socialnetwork;
 
-import static br.eng.mosaic.pigeon.common.domain.SocialNetwork.Social.facebook;
 import static br.eng.mosaic.pigeon.server.socialnetwork.SocialNetworkResolver.ResponseAttribute.fb_access_token;
 
 import java.io.IOException;
@@ -14,7 +13,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import br.eng.mosaic.pigeon.common.domain.SocialNetwork.Social;
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
 import br.eng.mosaic.pigeon.server.exception.ServerCrashException;
 import br.eng.mosaic.pigeon.server.exception.ServerUnavailableResourceException;
@@ -66,8 +64,7 @@ public class FacebookClient {
 			String name = json.getString("name");
 			String email = json.getString("email");
 			
-			UserInfo user = new UserInfo(name, email);
-			user.add(facebook, id, token);
+			UserInfo user = new UserInfo(name, email, token);
 			return user;
 		} catch (JSONException e) {
 			throw new ServerUnknownResourceException();
@@ -81,8 +78,8 @@ public class FacebookClient {
 	
 	public String publish(UserInfo user, String message) throws IOException {
 
-		String fbuid = user.get( Social.facebook ).id;
-		String token = user.get( Social.facebook ).token;
+		String fbuid = user.id;
+		String token = user.token;
 		
 		String signal = "fail";
 		try {

@@ -14,9 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import br.eng.mosaic.pigeon.common.domain.SocialNetwork.Social;
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
-import br.eng.mosaic.pigeon.server.controller.HomeController.uri;
 import br.eng.mosaic.pigeon.server.exception.ServerCrashException;
 import br.eng.mosaic.pigeon.server.helper.MimeType;
 import br.eng.mosaic.pigeon.server.service.UserService;
@@ -26,6 +24,7 @@ import br.eng.mosaic.pigeon.server.socialnetwork.FacebookClient;
 public class FacebookController extends AbstractSocialController {
 	
 	protected interface uri_fb {
+		String redir = "redirect:";
 		String sign_in = "oauth/facebook/signIn.do";
 		String sign_callback = "oauth/facebook/callback.do";
 		String photo = "{user_id}/oauth/facebook/photo.do";
@@ -37,7 +36,7 @@ public class FacebookController extends AbstractSocialController {
 
 	@RequestMapping( uri_fb.sign_in )
 	public String sign_in(HttpSession session) throws MalformedURLException {
-		return uri.redir + facebookClient.getUrlCodeKnowUser(uri_fb.sign_callback);
+		return uri_fb.redir + facebookClient.getUrlCodeKnowUser(uri_fb.sign_callback);
 	}
 	
 	@RequestMapping( uri_fb.sign_callback )
@@ -49,9 +48,9 @@ public class FacebookController extends AbstractSocialController {
 		
 		UserInfo user = facebookClient.getUser(uri_fb.sign_callback, hash);
 		userService.connect(user);
-		session.setAttribute(user.email, user);
+		session.setAttribute(user.id, user);
 		
-		ack_ok(response, user.email);
+		ack_ok(response, user.id);
 	}
 
 	@RequestMapping( uri_fb.photo )
@@ -59,9 +58,7 @@ public class FacebookController extends AbstractSocialController {
 			throws ClientProtocolException, URISyntaxException, IOException {
 
 		UserInfo user = getUser(session, user_id);
-		String token = user.get( Social.facebook ).token;
-
-		byte[] photo = facebookClient.getPicture( token );
+		byte[] photo = facebookClient.getPicture( user.token );
 		download(response, MimeType.image_png, photo );
 	}
 	
