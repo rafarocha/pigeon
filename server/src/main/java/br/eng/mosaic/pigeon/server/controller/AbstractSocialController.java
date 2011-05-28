@@ -44,4 +44,11 @@ public abstract class AbstractSocialController {
 		return "{ '" + signal + "' : '" + message + "' }";
 	}
 	
+	@ExceptionHandler(RuntimeException.class) public void handleException(
+			RuntimeException e, HttpServletResponse response) throws IOException {
+		String message = getAckJSON("fail", e.getMessage());
+		response.getWriter().print( message ); 
+		response.getWriter().flush();
+	}
+	
 }

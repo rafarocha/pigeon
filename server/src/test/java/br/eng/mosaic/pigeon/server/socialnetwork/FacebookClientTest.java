@@ -77,7 +77,7 @@ public class FacebookClientTest extends TestCase {
 		return map;
 	}
 	
-	@Test public void testGetTokenApplicationSuccessfully() {
+	@Test public void testGetTokenApplicationSuccessfully() throws ServerCrashException {
 		String token = Miscellany.getNumber();
 		startServer(text_plain, fb_access_token.key + token );
 		
@@ -88,7 +88,7 @@ public class FacebookClientTest extends TestCase {
 		stopServer();
 	}
 	
-	@Test(expected=ServerCrashException.class) public void testGetTokenApplicationWhenServerCrash() {
+	@Test(expected=ServerCrashException.class) public void testGetTokenApplicationWhenServerCrash() throws ServerCrashException {
 		facebookClient.getTokenApplication();
 	}
 	
@@ -119,7 +119,7 @@ public class FacebookClientTest extends TestCase {
 		facebookClient.getUrlCodeKnowUser( null );
 	}
 	
-	@Test public void testGetUserSuccessfully() throws JSONException {
+	@Test public void testGetUserSuccessfully() throws JSONException, ServerCrashException {
 		String token = Miscellany.getNumber();
 		JSONObject json = Miscellany.getJSONUser();
 		startServer(text_json, getMapping(fb_access_token.key + token, json));
@@ -137,11 +137,11 @@ public class FacebookClientTest extends TestCase {
 		stopServer();
 	}
 	
-	@Test(expected=ServerCrashException.class) public void testGetUserWhenServerCrash() {
+	@Test(expected=ServerCrashException.class) public void testGetUserWhenServerCrash() throws ServerCrashException {
 		facebookClient.getUser( "whatever.thing.this", null );
 	}	
 	
-	@Test public void testGetUserWhenTokenUnknownOnServer() {
+	@Test public void testGetUserWhenTokenUnknownOnServer() throws ServerCrashException {
 		startServer(text_json, "nothing" );
 		boolean behavior = false;
 		try {
@@ -153,7 +153,7 @@ public class FacebookClientTest extends TestCase {
 		stopServer();
 	}
 	
-	@Test public void testGetUserWhenBasicUserInfoNotAvailableOnServer() throws JSONException {
+	@Test public void testGetUserWhenBasicUserInfoNotAvailableOnServer() throws JSONException, ServerCrashException {
 		startServer(text_json, getMapping( "", new JSONObject()));
 		boolean behavior = false;
 		try {
@@ -165,7 +165,7 @@ public class FacebookClientTest extends TestCase {
 		stopServer();
 	}
 	
-	@Test public void testGetUserWhenBasicUserInfoChangedOnServer() throws JSONException {
+	@Test public void testGetUserWhenBasicUserInfoChangedOnServer() throws JSONException, ServerCrashException {
 		String token = Miscellany.getNumber();
 		startServer(text_json, getMapping(token, getJSONSample()));
 		boolean behavior = false;
@@ -179,7 +179,7 @@ public class FacebookClientTest extends TestCase {
 		stopServer();
 	}
 	
-	@Test public void testPublishSuccessfully() throws JSONException {
+	@Test public void testPublishSuccessfully() throws JSONException, IOException, ServerCrashException {
 		String token = fb_access_token.key + Miscellany.getNumber();
 		JSONObject json = Miscellany.getJSONUser();
 		startServer(text_json, getMapping(token, json));

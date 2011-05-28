@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import br.eng.mosaic.pigeon.common.domain.SocialNetwork.Social;
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
+import br.eng.mosaic.pigeon.server.exception.ServerCrashException;
 import br.eng.mosaic.pigeon.server.exception.ServerUnavailableResourceException;
 import br.eng.mosaic.pigeon.server.exception.ServerUnknownResourceException;
 import br.eng.mosaic.pigeon.server.helper.IOFetchContent;
@@ -33,7 +34,7 @@ public class FacebookClient {
 		tagger = new Tagger();
 	}
 	
-	public String getTokenApplication() {
+	public String getTokenApplication() throws ServerCrashException {
 		String cURL = resolver.getCredentials();
 		String response = ioFetch.getContent( cURL );
 		return tagger.get(response, fb_access_token);
@@ -78,7 +79,7 @@ public class FacebookClient {
 		return ioFetch.getStream( uri );
 	}
 	
-	public String publish(UserInfo user, String message) {
+	public String publish(UserInfo user, String message) throws IOException {
 
 		String fbuid = user.get( Social.facebook ).id;
 		String token = user.get( Social.facebook ).token;

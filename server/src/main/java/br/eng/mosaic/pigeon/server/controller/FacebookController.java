@@ -10,7 +10,6 @@ import javax.servlet.http.HttpSession;
 import org.apache.http.client.ClientProtocolException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import br.eng.mosaic.pigeon.common.domain.SocialNetwork.Social;
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
 import br.eng.mosaic.pigeon.server.controller.HomeController.uri;
+import br.eng.mosaic.pigeon.server.exception.ServerCrashException;
 import br.eng.mosaic.pigeon.server.helper.MimeType;
 import br.eng.mosaic.pigeon.server.service.UserService;
 import br.eng.mosaic.pigeon.server.socialnetwork.FacebookClient;
@@ -46,7 +46,7 @@ public class FacebookController extends AbstractSocialController {
 
 		if ( hash == null || hash.isEmpty() )
 			ack_error(response, "erro ao autenticar com server facebook");
-
+		
 		UserInfo user = facebookClient.getUser(uri_fb.sign_callback, hash);
 		userService.connect(user);
 		session.setAttribute(user.email, user);
@@ -67,11 +67,18 @@ public class FacebookController extends AbstractSocialController {
 	
 	@RequestMapping( uri_fb.publish )
 	public void publish( @PathVariable String user_id, HttpSession session, HttpServletResponse response,
-			@RequestParam(value = "message") String message ) throws IOException, URISyntaxException {
+			@RequestParam(value = "message") String message ) throws IOException, URISyntaxException, ServerCrashException {
 		
 		UserInfo user = getUser(session, user_id);
 		String doc_id = facebookClient.publish(user, message);
 		ack_ok(response, doc_id);
+	}
+	
+	@RequestMapping( "/test.do" ) public void test() {
+		System.out.println( "" );
+		if ( true ) {
+			throw new RuntimeException();
+		}
 	}
 	
 	public void setFacebookClient(FacebookClient facebookClient) {
@@ -82,15 +89,4 @@ public class FacebookController extends AbstractSocialController {
 		this.userService = userService;
 	}
 	
-	@ExceptionHandler(RuntimeException.class) public void handleException(
-			RuntimeException e, HttpServletResponse response) {
-		System.out.println( e.getMessage() );
-		System.out.println( response );
-	}
-	
-	@RequestMapping( "test.do" )
-	public void test() {
-		throw new RuntimeException();
-	}
-
 }

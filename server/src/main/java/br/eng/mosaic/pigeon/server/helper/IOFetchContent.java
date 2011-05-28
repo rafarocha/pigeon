@@ -29,7 +29,7 @@ public class IOFetchContent {
 	private static final Logger logger = 
 		Logger.getLogger(IOFetchContent.class.getName());
 
-	public String getContent(String theUrl) {
+	public String getContent(String theUrl) throws ServerCrashException {
 		
 		String content;
 		
@@ -40,14 +40,13 @@ public class IOFetchContent {
 			content = extract( bufferedReader );
 		} catch (Exception e) {
 			logger.log(Level.SEVERE, "server.error.social.network > " + e.getMessage());
-			throw new RuntimeException();
-//			throw new ServerCrashException();
+			throw new ServerCrashException();
 		}
 
 		return content;
 	}
 	
-	public String getHttpClientContent( URI uri ) {
+	public String getHttpClientContent( URI uri ) throws ServerCrashException {
 		
 		HttpClient client = new DefaultHttpClient();
 		HttpPost post = new HttpPost( uri );
