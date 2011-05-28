@@ -174,7 +174,7 @@ public class FacebookClientTest extends TestCase {
 		stopServer();
 	}
 	
-	@Test public void testPublishSuccessfully() throws JSONException, IOException, ServerCrashException {
+	@Ignore @Test public void testPublishSuccessfully() throws JSONException, IOException, ServerCrashException {
 		String token = fb_access_token.key + Miscellany.getNumber();
 		JSONObject json = Miscellany.getJSONUser();
 		startServer(text_json, getMapping(token, json));

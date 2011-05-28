@@ -30,9 +30,8 @@ public class Miscellany {
 	
 	public static JSONObject getJSONUser() throws JSONException {
 		JSONObject obj = new JSONObject();
-		obj.put("id"	, getNumber() );
 		obj.put("name"	, getName() );
-		obj.put("email"	, getMail() );
+		obj.put("id"	, getMail() );
 		return obj;
 	}
 	

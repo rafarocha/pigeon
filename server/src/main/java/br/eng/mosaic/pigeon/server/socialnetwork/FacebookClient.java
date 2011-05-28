@@ -62,9 +62,8 @@ public class FacebookClient {
 		try {
 			String id = json.getString("id");
 			String name = json.getString("name");
-			String email = json.getString("email");
 			
-			UserInfo user = new UserInfo(name, email, token);
+			UserInfo user = new UserInfo(id, name, token);
 			return user;
 		} catch (JSONException e) {
 			throw new ServerUnknownResourceException();
