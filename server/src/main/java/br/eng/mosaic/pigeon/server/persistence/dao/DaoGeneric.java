@@ -32,7 +32,7 @@ public class DaoGeneric<Type, T> implements IDao<Type, T>{
 	
 	@Override
 	public void add(T obj) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.getTransaction().begin();
 			session.save(obj);

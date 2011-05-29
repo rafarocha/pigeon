@@ -1,26 +1,27 @@
 package br.eng.mosaic.pigeon.common.domain;
 
+import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.List;
 
-public class User {
-
+public class User implements Serializable {
+	
 	private String name;
 	private String email;
-	private List<Credential> socialNetworks;
+	private List<Credential> credentials;
 	private double score;
 
 	public User(){
 		this.name = "";
 		this.email = "";
-		this.socialNetworks = new LinkedList<Credential>();
+		this.credentials = new LinkedList<Credential>();
 		this.score = 0;
 	}
 	
-	public User(String name, String email, List<Credential> socialNetworks, double score){
+	public User(String name, String email, List<Credential> credentials, double score){
 		this.name = name;
 		this.email = email;
-		this.socialNetworks = socialNetworks;
+		this.credentials = credentials;
 		this.score = score;
 	}
 	
@@ -61,7 +62,7 @@ public class User {
 	 * @return Returns the set of social networks of user.
 	 */
 	public List<Credential> getSocialNetworks() {
-		return socialNetworks;
+		return credentials;
 	}
 
 	/**
@@ -69,7 +70,7 @@ public class User {
 	 * @param socialNetworks List of social networks associated to user.
 	 */
 	public void setSocialNetworks(List<Credential> socialNetworks) {
-		this.socialNetworks = socialNetworks;
+		this.credentials = socialNetworks;
 	}
 
 	/**
@@ -84,7 +85,7 @@ public class User {
 	 * Sum the points gained to user game score.
 	 * @param points Points gained in last play game.
 	 */
-	public void incrementScore(double points) {
+	public void setScore(double points) {
 		this.score = points;
 	}
 

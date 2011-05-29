@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+"-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  	<class name="br.eng.mosaic.pigeon.common.domain.User" table="User">
+  	  	<id column="email" name="email" type="java.lang.String"/>
+  	  	<property column="name" name="name" type="java.lang.String"/>
+  	  	<property column="score" name="score" type="java.lang.Double"/>
+		
+		<bag name="credentials" table="Credential" cascade="all-delete-orphan">
+  	  	  	<key column="user_id" />
+			<one-to-many class="br.eng.mosaic.pigeon.common.domain.Credential" />
+  	  	</bag>
+		
+  	</class>
+  	
+  	
+  	<!-- 	
+  	private String name;
+	private String email;
+	private List<Credential> socialNetworks;
+	private double score; 
+	-->
+</hibernate-mapping>

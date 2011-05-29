@@ -1,16 +1,18 @@
 package br.eng.mosaic.pigeon.common.domain;
 
-public class SocialNetwork {
+import java.io.Serializable;
 
-	private String id;
+public class SocialNetwork implements Serializable{
+	
+	private int id;
 	private String name;
 
 	public SocialNetwork(){
-		this.id = "";
+		this.id = 0;
 		this.name = "";
 	}
 	
-	public SocialNetwork(String id, String name){
+	public SocialNetwork(int id, String name){
 		this.id = id;
 		this.name = name;
 		User u = new User();
@@ -20,7 +22,7 @@ public class SocialNetwork {
 	 * 
 	 * @return
 	 */
-	public String getId() {
+	public int getId() {
 		return id;
 	}
 
@@ -28,7 +30,7 @@ public class SocialNetwork {
 	 * 
 	 * @param id
 	 */
-	public void setId(String id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 

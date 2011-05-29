@@ -1,23 +1,25 @@
 package br.eng.mosaic.pigeon.common.domain;
 
-public class Credential {
+import java.io.Serializable;
+
+public class Credential implements Serializable{
 
 	private int id;
-	private String userId;
+	private String socialId;
 	private SocialNetwork socialNetwork;
 	private Boolean allowPublishing;
 
 	
 	public Credential(){
 		this.id = 0;
-		this.userId = "";
+		this.socialId = "";
 		this.socialNetwork = new SocialNetwork();
 		this.allowPublishing = true;
 	}
 
-	public Credential(int id, String userId, SocialNetwork socialNetwork, Boolean allowPublishing){
+	public Credential(int id, String socialId, SocialNetwork socialNetwork, Boolean allowPublishing){
 		this.id = id;
-		this.userId = userId;
+		this.socialId = socialId;
 		this.socialNetwork = socialNetwork;
 		this.allowPublishing = allowPublishing;
 	}
@@ -43,7 +45,7 @@ public class Credential {
 	 * @return Returns the unique user identifier used by social network. 
 	 */
 	public String getUserId() {
-		return userId;
+		return socialId;
 	}
 	
 	/**
@@ -51,7 +53,7 @@ public class Credential {
 	 * @return Set the unique user identifier used by social network. 
 	 */
 	public void setUserId(String userId) {
-		this.userId = userId;
+		this.socialId = userId;
 	}
 	
 	public SocialNetwork getSocialNetwork() {
