@@ -28,7 +28,7 @@ public class UserRepositoryMemory implements UserRepository {
 	}
 
 	@Override public void insert(User user) {
-		map.put(user.email, user);
+		map.put(user.getEmail(), user);
 	}	
 
 }
