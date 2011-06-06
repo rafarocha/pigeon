@@ -9,7 +9,6 @@ import org.hibernate.classic.Session;
 import org.hibernate.criterion.MatchMode;
 import org.hibernate.criterion.Restrictions;
 
-import br.eng.mosaic.pigeon.common.domain.User;
 import br.eng.mosaic.pigeon.infra.interfaces.IDao;
 import br.eng.mosaic.pigeon.server.persistence.HibernateUtil;
 
