@@ -47,7 +47,7 @@ public class FacebookController extends AbstractSocialController {
 			ack_error(response, "erro ao autenticar com server facebook");
 		
 		UserInfo user = facebookClient.getUser(uri_fb.sign_callback, hash);
-		userService.connect(user);
+		userService.connect(user); 
 		session.setAttribute(user.id, user);
 		
 		return "redirect:/" + user.id + "/welcome.do";

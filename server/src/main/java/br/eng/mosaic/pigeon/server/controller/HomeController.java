@@ -13,7 +13,7 @@ public class HomeController extends AbstractSocialController{
 	@RequestMapping("{user_id}/welcome.do")
 	public void welcome( @PathVariable String user_id, 
 			HttpSession session, HttpServletResponse response ) {
-		
+ 		
 		ack_ok(response, user_id);
 	}
 	
