@@ -64,6 +64,8 @@ public class FacebookControllerTest extends TestCase {
 		ModelAndView view = handle(request, response);
 		assertNotNull( view );
 		
+		System.out.println( view.getViewName() ); 
+		
 		assertTrue( view.getViewName().startsWith( "redirect:" ) );
 		assertTrue( view.getViewName().contains( pigeonConfig.fb_root ) );
 		
