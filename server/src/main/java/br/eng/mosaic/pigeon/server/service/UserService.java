@@ -17,8 +17,8 @@ public class UserService {
 			 * TODO refactor code below, argh!
 			 */
 			user = new User();
-			user.email = userInfo.id;
-			user.name = userInfo.name;
+			user.setEmail( userInfo.id );
+			user.setName( userInfo.name );
 			userRepository.insert(user);
 		}
 		
