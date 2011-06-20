@@ -30,9 +30,10 @@
 		<property name="fb_root" value="https://graph.facebook.com/" />
 		
 		<!-- local -->
-		<property name="app_root" value="http://localhost:8080/pigeon/" />
+		
+		<property name="app_root" value="http://pigeon-dev-local.dyndns.biz:8080/pigeon/" />
 		<!-- homologacao -->
-<!--		<property name="app_root" value="http://www.mosaic.com.br:8080/pigeon/" />-->
+<!--		<property name="app_root" value="http://mosaic.eng.br:8080/server/" />-->
 		<!-- producao -->
 <!--		<property name="app_root" value="http://localhost:8080/pigeon/" />-->
 	</bean>

@@ -40,17 +40,17 @@ public class FacebookController extends AbstractSocialController {
 	}
 	
 	@RequestMapping( uri_fb.sign_callback )
-	public void callback( @RequestParam(value = "code") String hash,
-			HttpSession session, HttpServletResponse response ) throws IOException {
+	public String callback( @RequestParam(value = "code") String hash,
+			HttpSession session, HttpServletResponse response ) {
 
 		if ( hash == null || hash.isEmpty() )
 			ack_error(response, "erro ao autenticar com server facebook");
 		
 		UserInfo user = facebookClient.getUser(uri_fb.sign_callback, hash);
-		userService.connect(user);
+		userService.connect(user); 
 		session.setAttribute(user.id, user);
 		
-		ack_ok(response, user.id);
+		return "redirect:/" + user.id + "/welcome.do";
 	}
 
 	@RequestMapping( uri_fb.photo )
@@ -69,13 +69,6 @@ public class FacebookController extends AbstractSocialController {
 		UserInfo user = getUser(session, user_id);
 		String doc_id = facebookClient.publish(user, message);
 		ack_ok(response, doc_id);
-	}
-	
-	@RequestMapping( "/test.do" ) public void test() {
-		System.out.println( "" );
-		if ( true ) {
-			throw new RuntimeException();
-		}
 	}
 	
 	public void setFacebookClient(FacebookClient facebookClient) {
