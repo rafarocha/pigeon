@@ -61,7 +61,7 @@ public class User implements Serializable {
 	 * 
 	 * @return Returns the set of social networks of user.
 	 */
-	public List<Credential> getSocialNetworks() {
+	public List<Credential> getCredentials() {
 		return credentials;
 	}
 
@@ -69,8 +69,8 @@ public class User implements Serializable {
 	 * 
 	 * @param socialNetworks List of social networks associated to user.
 	 */
-	public void setSocialNetworks(List<Credential> socialNetworks) {
-		this.credentials = socialNetworks;
+	public void setCredentials(List<Credential> credentials) {
+		this.credentials = credentials;
 	}
 
 	/**
