@@ -6,6 +6,12 @@ public class UserInfo {
 	public String name;
 	public String token;
 	
+	public UserInfo(String id, String name) {
+		this.id = id;
+		this.name = name;
+
+	}
+	
 	public UserInfo(String id, String name, String token) {
 		this.id = id;
 		this.name = name;
