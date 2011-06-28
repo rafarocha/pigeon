@@ -21,7 +21,7 @@ import br.eng.mosaic.pigeon.server.service.UserService;
 import br.eng.mosaic.pigeon.server.socialnetwork.FacebookClient;
 
 @Controller
-public class FacebookController extends AbstractSocialController {
+public class FacebookController extends AbstractController {
 	
 	protected interface uri_fb {
 		String redir = "redirect:";
@@ -50,6 +50,9 @@ public class FacebookController extends AbstractSocialController {
 		userService.connect(user); 
 		session.setAttribute(user.id, user);
 		
+		System.out.println( "session.id:" + session.getAttribute(user.id) );
+		System.out.println( "session.id:" + user.id );
+		
 		return "redirect:/" + user.id + "/welcome.do";
 	}
 
@@ -64,10 +67,17 @@ public class FacebookController extends AbstractSocialController {
 	
 	@RequestMapping( uri_fb.publish )
 	public void publish( @PathVariable String user_id, HttpSession session, HttpServletResponse response,
-			@RequestParam(value = "message") String message ) throws IOException, URISyntaxException, ServerCrashException {
+			@RequestParam(value = "score") String score, @RequestParam(value = "message") String message ) 
+				throws IOException, URISyntaxException, ServerCrashException {
 		
+		// refatorar regras constarem no service
 		UserInfo user = getUser(session, user_id);
-		String doc_id = facebookClient.publish(user, message);
+		System.out.println( "session.test1:" + session.getAttribute(user_id) );
+		System.out.println( "session.test2:" + user );
+		System.out.println( "session.test3:" + session.getId() );
+		
+//		userService.update(user);
+		String doc_id = "";//facebookClient.publish(user, message);
 		ack_ok(response, doc_id);
 	}
 	

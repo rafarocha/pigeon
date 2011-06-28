@@ -11,8 +11,6 @@ public class TwitterController {
 	
 	@RequestMapping( "oauth/facebook/signIn.do" )
 	public void signIn() {
-	
-		
 		
 	}
 	

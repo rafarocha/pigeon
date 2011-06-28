@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HomeController extends AbstractSocialController{
+public class HomeController extends AbstractController{
 	
 	@RequestMapping("{user_id}/welcome.do")
 	public void welcome( @PathVariable String user_id, 

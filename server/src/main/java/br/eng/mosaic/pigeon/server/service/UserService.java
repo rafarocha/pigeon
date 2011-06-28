@@ -28,7 +28,15 @@ public class UserService {
 		return user;
 	}
 	
-	private void updateInfoStatisticals(User user) {}
+	public void update(UserInfo info) {
+		User user = userRepository.getAccount(info.id);
+		user.setScore(info.score);
+		userRepository.update(user);
+	}
+	
+	private void updateInfoStatisticals(User user) {
+		
+	}
 	
 	public void setUserRepository(UserRepository userRepository) {
 		this.userRepository = userRepository;

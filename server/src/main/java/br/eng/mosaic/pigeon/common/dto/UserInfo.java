@@ -5,6 +5,7 @@ public class UserInfo {
 	public String id;
 	public String name;
 	public String token;
+	public int score;
 	
 	public UserInfo(String id, String name, String token) {
 		this.id = id;
