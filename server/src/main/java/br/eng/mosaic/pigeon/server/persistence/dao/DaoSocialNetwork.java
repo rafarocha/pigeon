@@ -9,7 +9,7 @@ import br.eng.mosaic.pigeon.common.domain.SocialNetwork;
  * @author dhiego
  *
  */
-public class DaoSocialNetwork extends DaoGeneric<String, SocialNetwork> {
+public class DaoSocialNetwork extends DaoGeneric<Integer, SocialNetwork> {
 
 	public DaoSocialNetwork(){
 		

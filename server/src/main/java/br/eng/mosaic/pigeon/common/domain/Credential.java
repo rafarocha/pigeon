@@ -6,22 +6,25 @@ public class Credential implements Serializable{
 
 	private int id;
 	private String socialId;
+	private User user;
 	private SocialNetwork socialNetwork;
-	private Boolean allowPublishing;
+	private Boolean allowPublish;
 
 	
 	public Credential(){
 		this.id = 0;
 		this.socialId = "";
+		this.user = new User();
 		this.socialNetwork = new SocialNetwork();
-		this.allowPublishing = true;
+		this.allowPublish = true;
 	}
 
-	public Credential(int id, String socialId, SocialNetwork socialNetwork, Boolean allowPublishing){
+	public Credential(int id, String socialId, User user, SocialNetwork socialNetwork, Boolean allowPublish){
 		this.id = id;
 		this.socialId = socialId;
+		this.user = user;
 		this.socialNetwork = socialNetwork;
-		this.allowPublishing = allowPublishing;
+		this.allowPublish = allowPublish;
 	}
 	
 	/**
@@ -44,7 +47,7 @@ public class Credential implements Serializable{
 	 * 
 	 * @return Returns the unique user identifier used by social network. 
 	 */
-	public String getUserId() {
+	public String getSocialId() {
 		return socialId;
 	}
 	
@@ -52,8 +55,16 @@ public class Credential implements Serializable{
 	 * 
 	 * @return Set the unique user identifier used by social network. 
 	 */
-	public void setUserId(String userId) {
-		this.socialId = userId;
+	public void setSocialId(String socialId) {
+		this.socialId = socialId;
+	}
+	
+	public User getUser() {
+		return user;
+	}
+	
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	public SocialNetwork getSocialNetwork() {
@@ -64,12 +75,12 @@ public class Credential implements Serializable{
 		this.socialNetwork = socialNetwork;
 	}
 	
-	public Boolean getAllowPublishing() {
-		return allowPublishing;
+	public Boolean getAllowPublish() {
+		return allowPublish;
 	}
 	
-	public void setAllowPublishing(Boolean allowPublishing) {
-		this.allowPublishing = allowPublishing;
+	public void setAllowPublish(Boolean allowPublish) {
+		this.allowPublish = allowPublish;
 	}
 
 }

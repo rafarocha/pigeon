@@ -22,7 +22,7 @@ public class DaoGeneric<Type, T> implements IDao<Type, T>{
 	
 	@SuppressWarnings("unchecked")
 	public DaoGeneric(){
-	        this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+	        this.persistentClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[1];
 	}
 	
 	public Class<T> getPersistentClass() {
@@ -39,12 +39,14 @@ public class DaoGeneric<Type, T> implements IDao<Type, T>{
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			throw e;
+		}finally{
+			session.close();
 		}
 	}
 
 	@Override
 	public void remove(T obj) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.getTransaction().begin();
 			session.delete(obj);
@@ -52,36 +54,44 @@ public class DaoGeneric<Type, T> implements IDao<Type, T>{
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			throw e;
+		}finally{
+			session.close();
 		}		
 	}
 
 	@Override
 	public void update(T obj) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			session.getTransaction().begin();
+			session.evict(obj);
 			session.update(obj);
 			session.getTransaction().commit();
 		} catch (Exception e) {
 			session.getTransaction().rollback();
 			throw e;
+		}finally{
+			session.close();
 		}	
 	}
 
 	@Override
 	public T get(Type id) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			T t = (T) session.get(getPersistentClass(), (Serializable) id);
 			return t;
 		} catch (Exception e) {
 			throw e;
-		}	
+		}
+		finally{
+			session.close();
+		}
 	}
 
 	@Override
 	public List<T> getByProperty(Object value, String propertyName) throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			Criteria criteria = session.createCriteria(getPersistentClass());
 			criteria.add(Restrictions.like(propertyName,value.toString(), MatchMode.END));
@@ -91,12 +101,14 @@ public class DaoGeneric<Type, T> implements IDao<Type, T>{
 			return list;
 		} catch (Exception e) {
 			throw e;
+		}finally{
+			session.close();
 		}	
 	}
 
 	@Override
 	public List<T> list() throws Exception {
-		Session session = HibernateUtil.getSessionFactory().getCurrentSession();
+		Session session = HibernateUtil.getSessionFactory().openSession();
 		try {
 			Criteria criteria = session.createCriteria(getPersistentClass());			
 			List<T> list = (List<T>) criteria.list(); 
@@ -104,6 +116,8 @@ public class DaoGeneric<Type, T> implements IDao<Type, T>{
 			return list;
 		} catch (Exception e) {
 			throw e;
+		}finally{
+			session.close();
 		}	
 	}
 
