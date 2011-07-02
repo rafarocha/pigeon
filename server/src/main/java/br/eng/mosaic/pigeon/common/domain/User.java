@@ -6,6 +6,7 @@ import java.util.List;
 
 public class User implements Serializable {
 	
+	
 	private String name;
 	private String email;
 	private List<Credential> credentials;
