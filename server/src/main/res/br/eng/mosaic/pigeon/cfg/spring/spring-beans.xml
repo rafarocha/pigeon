@@ -31,7 +31,7 @@
 		
 		<!-- local -->
 		
-		<property name="app_root" value="http://10.0.0.4:8080/pigeon/" />
+		<property name="app_root" value="http://pigeon-dev-local.dyndns.biz:8080/pigeon/" />
 		<!-- homologacao -->
 <!--		<property name="app_root" value="http://mosaic.eng.br:8080/server/" />-->
 		<!-- producao -->
@@ -40,8 +40,8 @@
 	
 	<bean id="fbConfig" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookConfiguration">
 		<!-- local -->
-		<property name="id" value="114292618654468" />
-		<property name="secret" value="dffe4fce9782ab906dbcf15a81f0c855" />
+		<property name="id" value="199453210096251" />
+		<property name="secret" value="27ab5f49a8b87cedb02dc111e42432a2" />
 		<property name="api" value="59705b9c7e5087bd8aa14c5e5b8837b3" />
 		
 		<!-- homologacao -->

@@ -31,9 +31,13 @@ public class FacebookController extends AbstractController {
 	protected interface uri_fb {
 		String redir = "redirect:";
 		String sign_in = "oauth/facebook/signIn.do";
+		
+		String widget_sign_in = "oauth/facebook/widgetSignIn.do";
 		String sign_callback = "oauth/facebook/callback.do";
 		String photo = "{user_id}/oauth/facebook/photo.do";
 		String publish = "{user_id}/oauth/facebook/publish.do";
+		String widget_sign_callback = "oauth/facebook/widgetCallback.do";
+		String widget_url="http://pigeohunting.appspot.com";
 	}
 
 	@Autowired private FacebookClient facebookClient;
@@ -42,6 +46,11 @@ public class FacebookController extends AbstractController {
 	@RequestMapping( uri_fb.sign_in )
 	public String sign_in(HttpSession session) throws MalformedURLException {
 		return uri_fb.redir + facebookClient.getUrlCodeKnowUser(uri_fb.sign_callback);
+	}
+	
+	@RequestMapping( uri_fb.widget_sign_in )
+	public String widget_sign_in(HttpSession session) throws MalformedURLException {
+		return uri_fb.redir + facebookClient.getUrlCodeKnowUser(uri_fb.widget_sign_callback);
 	}
 	
 	@RequestMapping( uri_fb.sign_callback )
@@ -55,9 +64,25 @@ public class FacebookController extends AbstractController {
 		userService.connect(user);
 		super.setUser(session, user.id, user);
 		
-		System.out.println( "session.servlet.context.id:" + super.getUser(session, user.id).id );
+		System.out.println( "session.id:" + session.getAttribute(user.id) );
+		System.out.println( "session.id:" + user.id );
 		
 		return "redirect:/" + user.id + "/welcome.do";
+	}
+	
+	@RequestMapping( uri_fb.widget_sign_callback )
+	public String widget_callback( @RequestParam(value = "code") String hash,
+			HttpSession session, HttpServletResponse response ) {
+
+		if ( hash == null || hash.isEmpty() )
+			ack_error(response, "erro ao autenticar com server facebook");
+		
+		UserInfo user = facebookClient.getUser(uri_fb.widget_sign_callback, hash);
+		userService.connect(user); 
+		session.setAttribute(user.id, user);
+		session.setAttribute("userInfo", user);
+		
+		return "redirect:"+ uri_fb.widget_url;
 	}
 
 	@RequestMapping( uri_fb.photo )
