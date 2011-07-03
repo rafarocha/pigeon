@@ -14,10 +14,14 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.eng.mosaic.pigeon.common.domain.User;
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
+import br.eng.mosaic.pigeon.server.persistence.dao.DaoUser;
 
 @Controller
 public class ScorePointController extends AbstractController {
+	
+	private DaoUser daoUser = new DaoUser();
 
 	public interface uri_score {
 		String topfive = "/topfive.do";
@@ -40,9 +44,9 @@ public class ScorePointController extends AbstractController {
 		  }
 		 */		
 
-		List<UserInfo> topfive = null;//getTopFive(session);
+		List<User> topfive = null;//getTopFive(session);
 		if ( topfive == null )
-			topfive = new ArrayList<UserInfo>();
+			topfive = new ArrayList<User>();
 
 		topfive = createTopfive();
 	
@@ -55,7 +59,7 @@ public class ScorePointController extends AbstractController {
 				JSONObject object = new JSONObject();	
 				
 				object.put("id", String.valueOf(i+1));
-				object.put("name", topfive.get(i).name);
+				object.put("name", topfive.get(i).getName());
 				
 				array.put(object);
 
@@ -77,8 +81,21 @@ public class ScorePointController extends AbstractController {
 		x.update(null, null);
 	}
 
-	private List<UserInfo> createTopfive() {
+	private List<User> createTopfive() {
 
+		
+		
+		List<User> topFive = new ArrayList<User>();
+		
+		try {
+			topFive = daoUser.getTopFive();
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			
+		}
+		
+		/*
 		List<UserInfo> topFive = new ArrayList<UserInfo>();
 
 		UserInfo userA = new UserInfo("123", "Rafael Rocha", "http://a0.twimg.com/profile_images/702642138/foto-rafa-1_normal.png");
@@ -100,6 +117,7 @@ public class ScorePointController extends AbstractController {
 		UserInfo userE = new UserInfo("765", "Ivan Samuel", "http://a3.twimg.com/profile_images/1272843192/dany_euuuu_normal.jpg");
 		userE.score = 71;
 		topFive.add(userE);
+		*/ 
 
 		return topFive;
 	}

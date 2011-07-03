@@ -23,7 +23,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		
 		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet httpGet = new HttpGet("http://localhost:8888/samplemapfriends");
+		HttpGet httpGet = new HttpGet("http://localhost:8080/pigeon/samplemapfriends");
 		HttpResponse response = httpClient.execute(httpGet);
 		HttpEntity entity = response.getEntity();
 		InputStream is = entity.getContent();
