@@ -65,7 +65,7 @@ public class User implements Serializable {
 	public List<Credential> getCredentials() {
 		return credentials;
 	}
-
+	
 	/**
 	 * 
 	 * @param socialNetworks List of social networks associated to user.
