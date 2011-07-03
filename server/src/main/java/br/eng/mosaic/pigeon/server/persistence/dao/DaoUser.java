@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.xml.bind.ParseConversionEvent;
+
 import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.classic.Session;
@@ -65,6 +67,24 @@ public class DaoUser extends DaoGeneric<String, User> {
 
 		} catch (Exception e) {
 			session.getTransaction().rollback();
+			throw e;
+		}finally{
+			session.close();
+		}
+	}
+
+	public double getScore(String email) throws Exception {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			SQLQuery sqlQuery = session.createSQLQuery("select u.score from User u where u.email=:email");
+			sqlQuery.setString("email", email);
+
+			Object o = sqlQuery.uniqueResult();
+			double result = 0;
+			if(o != null)
+				result =  Double.parseDouble(sqlQuery.uniqueResult().toString());
+			return result;
+		} catch (Exception e) {
 			throw e;
 		}finally{
 			session.close();
