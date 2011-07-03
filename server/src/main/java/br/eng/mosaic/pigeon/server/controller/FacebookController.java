@@ -1,9 +1,14 @@
 package br.eng.mosaic.pigeon.server.controller;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.MalformedURLException;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.net.URISyntaxException;
+import java.net.UnknownHostException;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -47,11 +52,10 @@ public class FacebookController extends AbstractController {
 			ack_error(response, "erro ao autenticar com server facebook");
 		
 		UserInfo user = facebookClient.getUser(uri_fb.sign_callback, hash);
-		userService.connect(user); 
-		session.setAttribute(user.id, user);
+		userService.connect(user);
+		super.setUser(session, user.id, user);
 		
-		System.out.println( "session.id:" + session.getAttribute(user.id) );
-		System.out.println( "session.id:" + user.id );
+		System.out.println( "session.servlet.context.id:" + super.getUser(session, user.id).id );
 		
 		return "redirect:/" + user.id + "/welcome.do";
 	}
@@ -66,18 +70,16 @@ public class FacebookController extends AbstractController {
 	}
 	
 	@RequestMapping( uri_fb.publish )
-	public void publish( @PathVariable String user_id, HttpSession session, HttpServletResponse response,
+	public void publish( @PathVariable String user_id, HttpSession session, 
+			HttpServletResponse response, HttpServletRequest request,
 			@RequestParam(value = "score") String score, @RequestParam(value = "message") String message ) 
 				throws IOException, URISyntaxException, ServerCrashException {
 		
-		// refatorar regras constarem no service
 		UserInfo user = getUser(session, user_id);
-		System.out.println( "session.test1:" + session.getAttribute(user_id) );
-		System.out.println( "session.test2:" + user );
-		System.out.println( "session.test3:" + session.getId() );
+		user.score = Integer.parseInt(score);
 		
-//		userService.update(user);
-		String doc_id = "";//facebookClient.publish(user, message);
+		//userService.update(user); //TODO checar com dhiego se estah pronto e como configurar local
+		String doc_id = facebookClient.publish(user, message);
 		ack_ok(response, doc_id);
 	}
 	

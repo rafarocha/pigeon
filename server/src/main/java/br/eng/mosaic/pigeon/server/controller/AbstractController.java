@@ -29,7 +29,11 @@ public abstract class AbstractController {
 	}
 	
 	protected UserInfo getUser(HttpSession session, String user_id) {
-		return (UserInfo) session.getAttribute( user_id );
+		return (UserInfo) session.getServletContext().getAttribute(user_id);
+	}
+	
+	protected void setUser(HttpSession session, String user_id, UserInfo user) {
+		session.getServletContext().setAttribute(user_id, user);
 	}
 	
 	private void ack(HttpServletResponse response, String signal, String ack) {
