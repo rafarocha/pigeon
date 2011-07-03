@@ -3,6 +3,7 @@
  */
 package br.eng.mosaic.pigeon.server.persistence.dao;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +45,26 @@ public class DaoUser extends DaoGeneric<String, User> {
 			}
 			return result;
 		} catch (Exception e) {
+			throw e;
+		}finally{
+			session.close();
+		}
+	}
+	
+	public void updateScore(String email, double score) throws Exception {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		try {
+			session.getTransaction().begin();
+			SQLQuery sqlQuery = session.createSQLQuery("update user u set u.score=:score where u.email=:email");
+			sqlQuery.setDouble("score", score);
+			sqlQuery.setString("email", email);
+			
+			sqlQuery.executeUpdate();
+			
+			session.getTransaction().commit();
+
+		} catch (Exception e) {
+			session.getTransaction().rollback();
 			throw e;
 		}finally{
 			session.close();
