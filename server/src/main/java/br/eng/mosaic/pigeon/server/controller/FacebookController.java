@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.client.ClientProtocolException;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -82,7 +83,7 @@ public class FacebookController extends AbstractController {
 		session.setAttribute(user.id, user);
 		session.setAttribute("userInfo", user);
 		
-		return "redirect:"+ uri_fb.widget_url;
+		return "redirect:"+ uri_fb.widget_url+"?userid="+user.id;
 	}
 
 	@RequestMapping( uri_fb.photo )
@@ -115,5 +116,9 @@ public class FacebookController extends AbstractController {
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
+	
+	
+	
+	
 	
 }
