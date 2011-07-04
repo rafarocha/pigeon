@@ -55,7 +55,8 @@ public abstract class AbstractController {
 	}
 	
 	private String getAckJSON(String signal, String message) {
-		return "{ \"" + signal + "\" : \"" + message + "\" }";
+
+		return "{\""+signal + "\":" + message + "}";
 	}
 	
 	@ExceptionHandler(RuntimeException.class) public void handleException(
