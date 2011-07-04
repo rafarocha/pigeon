@@ -19,14 +19,18 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.eng.mosaic.pigeon.common.domain.User;
 import br.eng.mosaic.pigeon.common.dto.UserInfo;
 import br.eng.mosaic.pigeon.server.exception.ServerCrashException;
 import br.eng.mosaic.pigeon.server.helper.MimeType;
+import br.eng.mosaic.pigeon.server.persistence.dao.DaoUser;
 import br.eng.mosaic.pigeon.server.service.UserService;
 import br.eng.mosaic.pigeon.server.socialnetwork.FacebookClient;
 
 @Controller
 public class FacebookController extends AbstractController {
+	
+	private DaoUser userDao = new DaoUser();
 	
 	protected interface uri_fb {
 		String redir = "redirect:";
@@ -82,6 +86,14 @@ public class FacebookController extends AbstractController {
 		session.setAttribute(user.id, user);
 		session.setAttribute("userInfo", user);
 		
+		try {
+			userDao.add(new User(user.email, user.name, 0, String.valueOf(user.id) ));
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return "redirect:"+ uri_fb.widget_url;
 	}
 
@@ -100,9 +112,12 @@ public class FacebookController extends AbstractController {
 			@RequestParam(value = "score") String score, @RequestParam(value = "message") String message ) 
 				throws IOException, URISyntaxException, ServerCrashException {
 		
+		
 		UserInfo user = getUser(session, user_id);
 		user.score = Integer.parseInt(score);
 		
+		
+		//userDao.updateScore("", score);
 		//userService.update(user); //TODO checar com dhiego se estah pronto e como configurar local
 		String doc_id = facebookClient.publish(user, message);
 		ack_ok(response, doc_id);

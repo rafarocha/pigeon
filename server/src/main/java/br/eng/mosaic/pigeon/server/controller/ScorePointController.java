@@ -58,8 +58,8 @@ public class ScorePointController extends AbstractController {
 				
 				JSONObject object = new JSONObject();	
 				
-				object.put("id", String.valueOf(i+1));
-				object.put("name", topfive.get(i).getName());
+				object.put("score", topfive.get(i).getScore());
+				object.put("url", "https://graph.facebook.com/"+ topfive.get(i).getFacebook_id() +"/picture");
 				
 				array.put(object);
 

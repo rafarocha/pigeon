@@ -41,8 +41,8 @@
 	<bean id="fbConfig" class="br.eng.mosaic.pigeon.server.socialnetwork.FacebookConfiguration">
 		<!-- local -->
 		<property name="id" value="122401477846810" />
-		<property name="secret" value="a45a21888ae74336c156224ccedea859" />
-		<property name="api" value="23362e913366594cd6b975c9fd1ecb77 " />
+		<property name="secret" value="23362e913366594cd6b975c9fd1ecb77" />
+		<property name="api" value="a45a21888ae74336c156224ccedea859" />
 		
 		<!-- homologacao -->
 <!--		<property name="id" value="150586265008036" />-->

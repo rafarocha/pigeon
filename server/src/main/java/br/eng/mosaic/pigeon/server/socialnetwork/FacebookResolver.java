@@ -45,6 +45,7 @@ public class FacebookResolver extends SocialNetworkResolver {
 			+ "&redirect_uri=" + pigeonConfig.app_root 
 			+ callbackUri;
 		
+		System.out.println(command);
 		return mount( command );
 	}
 	

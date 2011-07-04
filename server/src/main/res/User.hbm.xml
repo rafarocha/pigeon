@@ -7,6 +7,7 @@
   	  	<id column="email" name="email" type="java.lang.String"/>
   	  	<property column="name" name="name"/>
   	  	<property column="score" name="score"/>
+  	  	<property column="facebook_id" name="facebook_id"/>
 		
  		<bag name="credentials" table="Credential" cascade="save-update" lazy="false">
   	  	  	<key column="user_id" />

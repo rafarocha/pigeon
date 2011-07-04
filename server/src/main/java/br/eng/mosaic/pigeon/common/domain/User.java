@@ -11,19 +11,35 @@ public class User implements Serializable {
 	private String email;
 	private List<Credential> credentials;
 	private double score;
+	private String facebook_id;
 
 	public User(){
 		this.name = "";
 		this.email = "";
 		this.credentials = new LinkedList<Credential>();
 		this.score = 0;
+		this.facebook_id = "";
 	}
 	
-	public User(String name, String email, List<Credential> credentials, double score){
+	public User(String name, String email, double score){
 		this.name = name;
 		this.email = email;
+		this.credentials = new LinkedList<Credential>();
+		this.score = score;
+	}
+	
+	public User(String email, String name, List<Credential> credentials, double score){
+		this.email = email;
+		this.name = name;	
 		this.credentials = credentials;
 		this.score = score;
+	}
+	
+	public User(String email, String name, double score, String facebook_id){
+		this.email = email;
+		this.name = name;	
+		this.score = score;
+		this.facebook_id = facebook_id;
 	}
 	
 	/**
@@ -90,6 +106,14 @@ public class User implements Serializable {
 		this.score = points;
 	}
 
+
+	public String getFacebook_id() {
+		return facebook_id;
+	}
+
+	public void setFacebook_id(String facebook_id) {
+		this.facebook_id = facebook_id;
+	}
 
 	@Override
 	public boolean equals(Object obj) {
