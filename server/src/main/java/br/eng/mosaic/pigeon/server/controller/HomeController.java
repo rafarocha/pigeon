@@ -9,12 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.eng.mosaic.pigeon.common.dto.UserInfo;
+
 @Controller
 public class HomeController extends AbstractController{
+	
+	@RequestMapping("userInfo.do")
+	public void userInfo( HttpServletRequest request, 
+			HttpSession session, HttpServletResponse response ){
+		UserInfo info=(UserInfo) session.getAttribute("userInfo");
+		JSONObject json=new JSONObject(info);
+		ack_ok(response, json.toString());
+	}
 	
 	@RequestMapping("{user_id}/welcome.do")
 	public void welcome( @PathVariable String user_id, HttpServletRequest request, 
